@@ -1,5 +1,12 @@
 <button
-  class="w-full h-16 outline-none focus:outline-none hover:bg-indigo-700 hover:bg-opacity-20 text-white text-opacity-50 text-xl font-light"
+  class="w-full h-16 outline-none focus:outline-none hover:bg-indigo-700/20 font-light cursor-pointer text-white"
+  [ngClass]="{
+    'text-2xl': division(),
+    'text-xl': !division(),
+    'bg-indigo-700/10': command(),
+    'text-white/50': firstRow() && !division(),
+    'bg-indigo-700/30 hover:bg-indigo-700/40': doubleSize(),
+  }"
 >
   <ng-content />
 </button>
