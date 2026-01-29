@@ -38,7 +38,7 @@ export class CalculatorService {
         this.resultText.set('0');
         return;
       }
-      this.resultText.update((currentVal) => currentVal.slice(0, -1));
+      this.resultText.update((text) => text.slice(0, -1));
       return;
     }
     // Apply operators
@@ -48,13 +48,46 @@ export class CalculatorService {
       this.resultText.set('0');
       return;
     }
-    //Validate decimal dots
-    if (value === '.' && !this.resultText().includes('.')) {
-      if (this.resultText() === '0' || this.resultText() === '') {
-        this.resultText.update((text) => text + '0.');
-      }
+    // Limit char length
+    if (this.resultText().length > 10) {
+      console.warn('Max length reached');
       return;
     }
-    this.resultText.update((text) => text + '.');
+    // Validate decimal dots
+    if (value === '.' && !this.resultText().includes('.')) {
+      if (this.resultText() === '0' || this.resultText() === '') {
+        this.resultText.set('0.');
+        return;
+      }
+      this.resultText.update((text) => text + '.');
+      return;
+    }
+    // Initial zero handling
+    if (value === '0' && (this.resultText() === '0' || this.resultText() === '-0')) {
+      return;
+    }
+    // Symbol handling
+    if (value === '+/-') {
+      if (this.resultText().includes('-')) {
+        this.resultText.update((text) => text.slice(1));
+        return;
+      }
+      this.resultText.update((text) => '-' + text);
+      return;
+    }
+
+    // Output
+
+    if (numbers.includes(value)) {
+      if (this.resultText() === '0') {
+        this.resultText.set(value);
+        return;
+      }
+      if (this.resultText() === '-0') {
+        this.resultText.set('-' + value);
+        return;
+      }
+      this.resultText.update((text) => text + value);
+    }
   }
 }

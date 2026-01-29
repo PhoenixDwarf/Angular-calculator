@@ -27,7 +27,7 @@ export class Calculator {
   public lastOperator = computed(() => this.calculatorService.lastOperator());
 
   handleClick(key: any) {
-    console.log({ key });
+    this.calculatorService.constructNumber(key);
   }
 
   // Old way to listen to events, using HostListener the decorator
