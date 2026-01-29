@@ -1,4 +1,4 @@
-import { Component, HostListener } from '@angular/core';
+import { Component, viewChildren } from '@angular/core';
 import { CalculatorButton } from '../calculator-button/calculator-button';
 
 @Component({
@@ -10,6 +10,8 @@ import { CalculatorButton } from '../calculator-button/calculator-button';
   },
 })
 export class Calculator {
+  public calculatorBtns = viewChildren(CalculatorButton);
+
   handleClick(key: any) {
     console.log({ key });
   }
@@ -17,6 +19,21 @@ export class Calculator {
   // Old way to listen to events, using HostListener the decorator
   // @HostListener('document:keyup', ['$event'])
   handleKeyboardEvent(event: KeyboardEvent) {
-    this.handleClick(event.key);
+    const key = event.key;
+
+    const keyEquivalents: Record<string, string> = {
+      Escape: 'C',
+      Clear: 'C',
+      '/': '÷',
+      X: 'x',
+      c: 'C',
+      '*': 'x',
+      Enter: '=',
+    };
+
+    const keyValue = keyEquivalents[key] ?? key;
+
+    this.handleClick(keyValue);
+    this.calculatorBtns().forEach((button) => button.keyboardPressStyle(keyValue));
   }
 }

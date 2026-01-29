@@ -16,8 +16,9 @@ import {
   styleUrl: './calculator-button.css',
   // New way of doing host bindings, no need for decorator and additional code!
   host: {
-    class: 'w-1/4 border-r border-b border-indigo-400',
+    class: 'border-r border-b border-indigo-400',
     '[class.w-2/4]': 'doubleSize()',
+    '[class.w-1/4]': '!doubleSize()',
   },
 })
 export class CalculatorButton {
