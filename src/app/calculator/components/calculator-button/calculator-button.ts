@@ -1,5 +1,13 @@
 import { NgClass } from '@angular/common';
-import { booleanAttribute, ChangeDetectionStrategy, Component, input } from '@angular/core';
+import {
+  booleanAttribute,
+  ChangeDetectionStrategy,
+  Component,
+  ElementRef,
+  input,
+  output,
+  viewChild,
+} from '@angular/core';
 
 @Component({
   selector: 'calculator-button',
@@ -19,4 +27,14 @@ export class CalculatorButton {
   public firstRow = input(false, { transform: booleanAttribute });
   public division = input(false, { transform: booleanAttribute });
   public doubleSize = input(false, { transform: booleanAttribute });
+
+  public btnClick = output<string>();
+  public contentValue = viewChild<ElementRef<HTMLButtonElement>>('button');
+
+  handleClick() {
+    const btnRef = this.contentValue()?.nativeElement;
+    if (!btnRef) return;
+
+    this.btnClick.emit(btnRef.innerText.trim());
+  }
 }

@@ -7,6 +7,8 @@
     'text-white/50': firstRow() && !division(),
     'bg-indigo-700/30 hover:bg-indigo-700/40': doubleSize(),
   }"
+  (click)="handleClick()"
+  #button
 >
   <ng-content />
 </button>

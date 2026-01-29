@@ -6,4 +6,8 @@ import { CalculatorButton } from '../calculator-button/calculator-button';
   imports: [CalculatorButton],
   templateUrl: './calculator.html',
 })
-export class Calculator {}
+export class Calculator {
+  handleClick(key: any) {
+    console.log({ key });
+  }
+}
