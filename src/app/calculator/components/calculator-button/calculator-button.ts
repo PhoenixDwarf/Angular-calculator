@@ -30,9 +30,7 @@ export class CalculatorButton {
   public doubleSize = input(false, { transform: booleanAttribute });
 
   public btnClick = output<string>();
-
   public contentValue = viewChild<ElementRef<HTMLButtonElement>>('button');
-
   public isPressed = signal(false);
 
   handleClick() {
