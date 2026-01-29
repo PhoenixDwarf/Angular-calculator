@@ -1,8 +1,19 @@
-/* This is one way TAILWINDCSS help us applying multiple classes within a custom rule/selector */
-/* For this case, it was not useful since it overrides other classes conditionally applied in the html */
+/* This is one way TAILWINDCSS help us applying multiple classes within a custom rule/selector.
+It might be usefull when too many classes are used in one element
+and you want to group them to have a cleanner HTML */
+
+/* For this case, it was not useful since it overrides other classes conditionally applied in the HTML */
 
 /* @reference "tailwindcss";
 
 button {
   @apply w-full h-16 outline-none focus:outline-none hover:bg-indigo-700/20 text-white/50 text-xl font-light;
-} */
+}
+
+or
+
+.my-custom-class {
+  @apply w-full h-16 outline-none focus:outline-none hover:bg-indigo-700/20 text-white/50 text-xl font-light;
+}
+
+*/

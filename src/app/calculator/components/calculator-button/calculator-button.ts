@@ -1,11 +1,11 @@
 import { NgClass } from '@angular/common';
 import {
   booleanAttribute,
-  ChangeDetectionStrategy,
   Component,
   ElementRef,
   input,
   output,
+  signal,
   viewChild,
 } from '@angular/core';
 
@@ -29,12 +29,25 @@ export class CalculatorButton {
   public doubleSize = input(false, { transform: booleanAttribute });
 
   public btnClick = output<string>();
+
   public contentValue = viewChild<ElementRef<HTMLButtonElement>>('button');
+
+  public isPressed = signal(false);
 
   handleClick() {
     const btnRef = this.contentValue()?.nativeElement;
     if (!btnRef) return;
 
     this.btnClick.emit(btnRef.innerText.trim());
+  }
+
+  keyboardPressStyle(key: string) {
+    if (!this.contentValue()) return;
+
+    const value = this.contentValue()?.nativeElement.innerText;
+    if (value !== key) return;
+
+    this.isPressed.set(true);
+    setTimeout(() => this.isPressed.set(false), 100);
   }
 }
