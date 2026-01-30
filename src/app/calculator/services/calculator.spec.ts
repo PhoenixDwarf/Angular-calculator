@@ -14,15 +14,34 @@ describe('CalculatorService', () => {
   });
 
   it('should be created with default values', () => {
-    // todo:
+    expect(service.resultText()).toBe('0');
+    expect(service.subResultText()).toBe('0');
+    expect(service.lastOperator()).toBe('+');
   });
 
   it('should set resultText, subResultText to "0" when C is pressed', () => {
-    // todo:
+    service.resultText.set('123');
+    service.subResultText.set('0456');
+    service.lastOperator.set('-');
+
+    service.constructNumber('C');
+
+    expect(service.resultText()).toBe('0');
+    expect(service.subResultText()).toBe('0');
+    expect(service.lastOperator()).toBe('+');
+
+    // The following line will not affect other tests since
+    // we are using "beforeEach" to re-inject the calculator service
+    // before each test
+    service.constructNumber('1');
   });
 
   it('should update resultText with number input', () => {
-    // todo:
+    service.constructNumber('1');
+    service.constructNumber('2');
+    service.constructNumber('3');
+
+    expect(service.resultText()).toBe('123');
   });
 
   it('should handle operators correctly', () => {
