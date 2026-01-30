@@ -54,7 +54,7 @@ export class CalculatorService {
     }
     // Limit char length
     if (this.resultText().length >= 10) {
-      console.warn('Max length reached');
+      console.log('Max length reached');
       return;
     }
     // Validate decimal dots

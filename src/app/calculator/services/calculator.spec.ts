@@ -1,5 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 import { CalculatorService } from './calculator';
+import { vi } from 'vitest';
 
 describe('CalculatorService', () => {
   let service: CalculatorService;
@@ -7,6 +8,11 @@ describe('CalculatorService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({});
     service = TestBed.inject(CalculatorService);
+    // On line 174 we mocked the log method from the console object.
+    // To avoid passing the mocked method down to other tests
+    // we reset all mocks, similar to what we do with the service
+    // by re injecting it and creating a new instance before each test
+    vi.resetAllMocks();
   });
 
   it('should be created', () => {
@@ -167,15 +173,23 @@ describe('CalculatorService', () => {
   });
 
   it('should handle max length', () => {
+    const consoleSpy = vi.spyOn(console, 'log');
+    consoleSpy.mockImplementation(() => {});
+
     for (let i = 1; i <= 20; i++) {
       service.constructNumber('1');
     }
 
     expect(service.resultText().length).toBe(10);
     expect(service.resultText()).toBe('1111111111');
+
+    expect(consoleSpy).toHaveBeenCalled();
+    expect(consoleSpy).toHaveBeenCalledTimes(10);
   });
 
   it('should handle invalid input', () => {
+    const consoleSpy = vi.spyOn(console, 'log');
+
     service.resultText.set('123');
 
     service.constructNumber('H');
@@ -183,5 +197,10 @@ describe('CalculatorService', () => {
     service.constructNumber('}');
 
     expect(service.resultText()).toBe('123');
+    expect(consoleSpy).toHaveBeenCalled();
+    expect(consoleSpy).toHaveBeenCalledTimes(3);
+    expect(consoleSpy).toHaveBeenCalledWith('Invalid input', 'H');
+    expect(consoleSpy).toHaveBeenCalledWith('Invalid input', '?');
+    expect(consoleSpy).toHaveBeenCalledWith('Invalid input', '}');
   });
 });
