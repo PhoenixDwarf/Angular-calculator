@@ -45,7 +45,31 @@ describe('CalculatorService', () => {
   });
 
   it('should handle operators correctly', () => {
-    // todo:
+    service.resultText.set('12345');
+
+    service.constructNumber('-');
+
+    expect(service.resultText()).toBe('0');
+    expect(service.lastOperator()).toBe('-');
+
+    service.resultText.set('12');
+    service.constructNumber('x');
+
+    expect(service.resultText()).toBe('0');
+    expect(service.lastOperator()).toBe('x');
+  });
+
+  it('should handle operators correctly (forEach)', () => {
+    const operators = ['+', '-', 'x', '÷'];
+
+    operators.forEach((operator) => {
+      service.resultText.set('1234');
+
+      service.constructNumber(operator);
+
+      expect(service.resultText()).toBe('0');
+      expect(service.lastOperator()).toBe(operator);
+    });
   });
 
   it('should calculate result correctly for addition', () => {
