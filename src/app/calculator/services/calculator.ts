@@ -53,7 +53,7 @@ export class CalculatorService {
       return;
     }
     // Limit char length
-    if (this.resultText().length > 10) {
+    if (this.resultText().length >= 10) {
       console.warn('Max length reached');
       return;
     }

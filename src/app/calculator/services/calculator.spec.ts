@@ -73,50 +73,115 @@ describe('CalculatorService', () => {
   });
 
   it('should calculate result correctly for addition', () => {
-    // todo:
+    service.constructNumber('1');
+    service.constructNumber('+');
+    service.constructNumber('2');
+    service.constructNumber('=');
+
+    expect(service.resultText()).toBe('3');
   });
 
   it('should calculate result correctly for subtraction', () => {
-    // todo:
+    service.constructNumber('1');
+    service.constructNumber('-');
+    service.constructNumber('2');
+    service.constructNumber('=');
+
+    expect(service.resultText()).toBe('-1');
   });
 
   it('should calculate result correctly for multiplication', () => {
-    // todo:
+    service.constructNumber('1');
+    service.constructNumber('x');
+    service.constructNumber('2');
+    service.constructNumber('=');
+
+    expect(service.resultText()).toBe('2');
   });
 
   it('should calculate result correctly for division', () => {
-    // todo:
+    service.constructNumber('1');
+    service.constructNumber('÷');
+    service.constructNumber('2');
+    service.constructNumber('=');
+
+    expect(service.resultText()).toBe('0.5');
   });
 
   it('should handle decimal point correctly', () => {
-    // todo:
+    service.constructNumber('1');
+    service.constructNumber('2');
+    service.constructNumber('.');
+    service.constructNumber('.');
+    service.constructNumber('.');
+    service.constructNumber('5');
+
+    expect(service.resultText()).toBe('12.5');
   });
 
   it('should handle decimal point starting with 0', () => {
-    // todo:
+    service.constructNumber('.');
+    service.constructNumber('.');
+
+    expect(service.resultText()).toBe('0.');
   });
 
   it('should handle sign change +/-', () => {
-    // todo:
+    service.constructNumber('5');
+    service.constructNumber('+/-');
+
+    expect(service.resultText()).toBe('-5');
+
+    service.constructNumber('+/-');
+
+    expect(service.resultText()).toBe('5');
   });
 
   it('should handle backspace', () => {
-    // todo:
+    service.constructNumber('Backspace');
+
+    expect(service.resultText()).toBe('0');
+
+    service.constructNumber('1');
+    service.constructNumber('2');
+    service.constructNumber('3');
+    service.constructNumber('Backspace');
+    service.constructNumber('Backspace');
+
+    expect(service.resultText()).toBe('1');
   });
 
   it('should handle backspace with negative numbers', () => {
-    // todo:
+    service.constructNumber('+/-');
+    service.constructNumber('Backspace');
+
+    expect(service.resultText()).toBe('0');
+
+    service.constructNumber('+/-');
+    service.constructNumber('1');
+    service.constructNumber('2');
+    service.constructNumber('3');
+    service.constructNumber('Backspace');
+
+    expect(service.resultText()).toBe('-12');
   });
 
   it('should handle max length', () => {
-    // todo:
+    for (let i = 1; i <= 20; i++) {
+      service.constructNumber('1');
+    }
+
+    expect(service.resultText().length).toBe(10);
+    expect(service.resultText()).toBe('1111111111');
   });
 
   it('should handle invalid input', () => {
-    // todo:
-  });
+    service.resultText.set('123');
 
-  it('should handle negative zero input correctly', () => {
-    // todo:
+    service.constructNumber('H');
+    service.constructNumber('?');
+    service.constructNumber('}');
+
+    expect(service.resultText()).toBe('123');
   });
 });
