@@ -1,4 +1,4 @@
 [[redirects]]
   from = "/*"
   status = 200
-  to = "efna-zoneless-calculator/pro-calculator/browser/index.html"
+  to = "pro-calculator/browser/index.html"
