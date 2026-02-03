@@ -40,7 +40,7 @@ describe('CalculatorView', () => {
 
     // Since we overrided the calculator component, this log will show the mocked implementation instead of
     // the real component to make the test lighter and to avoid importing unwanted and unnecessary services, components and configs
-    console.log(compiled.innerHTML);
+    // console.log(compiled.innerHTML);
 
     expect(compiled.querySelector('calculator')).toBeTruthy();
   });
