@@ -68,12 +68,22 @@ describe('CalculatorButton', () => {
     expect(spy).toHaveBeenCalledWith('9');
   });
 
-  it('should set isPressed to true and then false when keyboardPressedStyle is called with matching key', (done) => {
-    // todo:
+  it('should set pressed to true and then false when keyboardPressedStyle is called with matching key', async (done) => {
+    component.contentValue()!.nativeElement.innerText = '9';
+    component.keyboardPressStyle('9');
+
+    expect(component.pressed()).toBe(true);
+
+    await new Promise((resolve) => setTimeout(resolve, 101));
+
+    expect(component.pressed()).toBe(false);
   });
 
-  it('should NOT set isPressed if key does not match', () => {
-    // todo:
+  it('should NOT set pressed if key does not match', () => {
+    component.contentValue()!.nativeElement.innerText = '9';
+    component.keyboardPressStyle('8');
+
+    expect(component.pressed()).toBe(false);
   });
 
   it('should display projected content', () => {

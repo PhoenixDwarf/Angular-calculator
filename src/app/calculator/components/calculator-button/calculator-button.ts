@@ -31,7 +31,7 @@ export class CalculatorButton {
 
   public btnClick = output<string>();
   public contentValue = viewChild<ElementRef<HTMLButtonElement>>('button');
-  public isPressed = signal(false);
+  public pressed = signal(false);
 
   handleClick() {
     const btnRef = this.contentValue()?.nativeElement;
@@ -46,7 +46,7 @@ export class CalculatorButton {
     const value = this.contentValue()?.nativeElement.innerText;
     if (value !== key) return;
 
-    this.isPressed.set(true);
-    setTimeout(() => this.isPressed.set(false), 100);
+    this.pressed.set(true);
+    setTimeout(() => this.pressed.set(false), 100);
   }
 }
