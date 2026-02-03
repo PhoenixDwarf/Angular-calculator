@@ -2,6 +2,8 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { Calculator } from './calculator';
 import { signal } from '@angular/core';
 import { CalculatorService } from '@/calculator/services/calculator';
+import { By } from '@angular/platform-browser';
+import { CalculatorButton } from '../calculator-button/calculator-button';
 
 class MockCalculatorService {
   resultText = signal('100');
@@ -16,6 +18,8 @@ describe('Calculator', () => {
   let mockCalculatorService: MockCalculatorService = new MockCalculatorService();
 
   beforeEach(() => {
+    mockCalculatorService = new MockCalculatorService();
+
     TestBed.configureTestingModule({
       imports: [Calculator],
       // Replaces the CalculatorService with a Mock
@@ -30,6 +34,7 @@ describe('Calculator', () => {
 
     fixture = TestBed.createComponent(Calculator);
     component = fixture.componentInstance;
+
     fixture.detectChanges();
   });
 
@@ -68,27 +73,45 @@ describe('Calculator', () => {
   });
 
   it('should call constructNumber when handleClick is called', () => {
-    // todo:
+    component.handleClick('5');
+    expect(mockCalculatorService.constructNumber).toHaveBeenCalledWith('5');
   });
 
   it('should handle keyboard events correctly', () => {
-    // todo:
+    const event = new KeyboardEvent('keyup', { key: '1' });
+    document.dispatchEvent(event);
+
+    expect(mockCalculatorService.constructNumber).toHaveBeenCalledWith('1');
   });
 
   it('should handle special keyboard events (Enter -> =)', () => {
-    // todo:
+    const event = new KeyboardEvent('keyup', { key: 'Enter' });
+    document.dispatchEvent(event);
+
+    expect(mockCalculatorService.constructNumber).toHaveBeenCalledWith('=');
   });
 
   it('should handle special keyboard events (Escape -> C)', () => {
-    // todo:
+    const event = new KeyboardEvent('keyup', { key: 'Escape' });
+    document.dispatchEvent(event);
+
+    expect(mockCalculatorService.constructNumber).toHaveBeenCalledWith('C');
   });
 
-  it('should call keyboardPressedStyle on all buttons when key is pressed', () => {
-    // todo:
+  it('should call constructNumber when button is clicked', () => {
+    const buttons = fixture.debugElement.queryAll(By.directive(CalculatorButton));
+
+    buttons.forEach((button) => button.triggerEventHandler('btnClick', 'C'));
+
+    expect(mockCalculatorService.constructNumber).toHaveBeenCalledWith('C');
+    expect(mockCalculatorService.constructNumber).toHaveBeenCalledTimes(buttons.length);
   });
 
   it('should update resultText signal when service updates', () => {
-    // todo:
+    mockCalculatorService.resultText.set('999');
+    fixture.detectChanges();
+
+    expect(component.resultText()).toBe('999');
   });
 
   it('should have 19 calculator-button components with content projected', () => {
