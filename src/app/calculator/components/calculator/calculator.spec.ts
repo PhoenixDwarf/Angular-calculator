@@ -122,7 +122,7 @@ describe('Calculator', () => {
     expect(buttons.length).toBe(19);
 
     for (let i = 0; i < buttonsContents.length; i++) {
-      expect(buttons[i].querySelector('button')?.innerHTML.trim()).toBe(buttonsContents[i]);
+      expect(buttons[i].textContent.trim()).toBe(buttonsContents[i]);
     }
   });
 });
