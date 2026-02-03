@@ -115,6 +115,14 @@ describe('Calculator', () => {
   });
 
   it('should have 19 calculator-button components with content projected', () => {
-    // todo:
+    const compiled = fixture.nativeElement as HTMLElement;
+    const buttons = compiled.querySelectorAll('calculator-button');
+    const buttonsContents = 'C +/- % ÷ 7 8 9 x 4 5 6 - 1 2 3 + 0 . ='.split(' ');
+
+    expect(buttons.length).toBe(19);
+
+    for (let i = 0; i < buttonsContents.length; i++) {
+      expect(buttons[i].querySelector('button')?.innerHTML.trim()).toBe(buttonsContents[i]);
+    }
   });
 });
