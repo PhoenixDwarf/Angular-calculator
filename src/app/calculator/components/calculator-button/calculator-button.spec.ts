@@ -54,8 +54,18 @@ describe('CalculatorButton', () => {
     expect(buttonCssClasses).toContain('bg-indigo-700/10');
   });
 
-  it('should emit onClick when handleClick is called', () => {
-    // todo:
+  it('should emit btnClick when handleClick is called', () => {
+    const spy = vi.spyOn(component.btnClick, 'emit');
+
+    const buttonElement = (fixture.nativeElement as HTMLElement).querySelector('button');
+
+    expect(buttonElement).toBeTruthy();
+
+    buttonElement!.innerText = ' 9 ';
+
+    buttonElement!.click();
+
+    expect(spy).toHaveBeenCalledWith('9');
   });
 
   it('should set isPressed to true and then false when keyboardPressedStyle is called with matching key', (done) => {
